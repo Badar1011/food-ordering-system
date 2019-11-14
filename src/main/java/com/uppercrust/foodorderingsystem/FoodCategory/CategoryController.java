@@ -44,7 +44,7 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/category/{id}")
+    @DeleteMapping("/category/{id}")
     public ResponseEntity<?> deleteCat(@PathVariable Long id) {
         Boolean isPresent = categoryService.findOne(id).isPresent();
         if (isPresent) {
