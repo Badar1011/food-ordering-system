@@ -18,6 +18,7 @@ public class Role {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String role;
 
     public Role(String role, Set<User> users) {

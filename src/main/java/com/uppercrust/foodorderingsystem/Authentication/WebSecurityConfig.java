@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 //TODO add some fake user, ask rob about password encode bean, test it all.
-
+//TODO delete user from database, create a new user and test it all
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // could remove the password encoder bit to see how it goes.

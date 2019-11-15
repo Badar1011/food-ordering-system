@@ -34,7 +34,7 @@ public class User {
     private int number;
 
     private boolean enabled;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
