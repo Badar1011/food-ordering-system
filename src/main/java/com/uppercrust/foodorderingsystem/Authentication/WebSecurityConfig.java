@@ -1,9 +1,10 @@
 package com.uppercrust.foodorderingsystem.Authentication;
 
-import com.sun.xml.bind.v2.TODO;
+import com.uppercrust.foodorderingsystem.Authentication.User.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,26 +25,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/home").access("hasRole()")
+                .mvcMatchers(HttpMethod.POST, "/category").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
                 .and()
-                .rememberMe()
-                .and()
-                .formLogin();
+                .logout();
+
+        http.csrf().disable();
     }
-
-
-    //TODO add some fake user, ask rob about password encode bean, test it all.
+//TODO add some fake user, ask rob about password encode bean, test it all.
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

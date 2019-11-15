@@ -1,5 +1,6 @@
-package com.uppercrust.foodorderingsystem.Authentication;
+package com.uppercrust.foodorderingsystem.Authentication.Role;
 
+import com.uppercrust.foodorderingsystem.Authentication.User.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,10 +30,7 @@ public class Role {
         this.role = role;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 }

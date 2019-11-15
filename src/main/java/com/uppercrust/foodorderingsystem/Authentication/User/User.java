@@ -1,13 +1,11 @@
-package com.uppercrust.foodorderingsystem.Authentication;
+package com.uppercrust.foodorderingsystem.Authentication.User;
 
+import com.uppercrust.foodorderingsystem.Authentication.Role.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -32,8 +30,11 @@ public class User {
     private int number;
 
     private boolean enabled;
-
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
     public User(@Email String email, String password, int number, boolean enabled, Set<Role> roles) {
@@ -48,5 +49,7 @@ public class User {
         this(email, password, number, enabled, new HashSet<>(Arrays.asList(roles)));
     }
 
-
+ /*   public void setRoles(Role... roles){
+        this.roles.addAll( Arrays.asList(roles));
+    }*/
 }
