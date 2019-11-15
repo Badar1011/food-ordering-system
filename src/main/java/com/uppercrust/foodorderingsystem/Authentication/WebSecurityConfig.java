@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "/category").authenticated()
+                .mvcMatchers(HttpMethod.GET, "/category").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
