@@ -39,8 +39,8 @@ class Runner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         // log.info("hello bee");
-        //  Role roleUser = this.roleRepository.save(new Role("ROLE_USER"));
-        //   log.info("role user" + roleUser);
+       //   Role roleUser = this.roleRepository.save(new Role("ROLE_ADMIN"));
+         //  log.info("role user" + roleUser);
         //   Role roleAdmin = this.roleRepository.save(new Role("ROLE_ADMIN"));
         //   User user = new User("badar@gmail.com", "123", 123123, true, roleUser);
      /*   User user1 = this.userRepository.save(user);

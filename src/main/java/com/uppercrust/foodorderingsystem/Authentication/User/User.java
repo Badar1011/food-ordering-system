@@ -4,6 +4,7 @@ import com.uppercrust.foodorderingsystem.Authentication.Role.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "roles")
+@ToString(exclude = "roles")
 @Data
 public class User {
 
@@ -34,7 +36,7 @@ public class User {
     private int number;
 
     private boolean enabled;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

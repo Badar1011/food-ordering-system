@@ -45,9 +45,11 @@ public class CustomUserDetailsService implements UserDetailsService, UserDetails
         log.info("user in save"+ user);
 
 
-        Role role = roleRepository.findByRole("ROLE_USER");
-        List<Role> listOfRole = Arrays.asList(role);
-     //   Role roleAdmin = ;
+        Role role = this.roleRepository.findByRole("ROLE_USER");
+        Role roleAdmin = this.roleRepository.findByRole("ROLE_ADMIN");
+        log.info("role info >>>"+ role);
+        List<Role> listOfRole = Arrays.asList(role, roleAdmin);
+        log.info("list of role info >>>"+ listOfRole);
         user.setRoles(listOfRole);
         log.info("User created: " + user);
         return userRepository.save(user);
