@@ -44,7 +44,7 @@ public class CategoryController {
 
 
     @DeleteMapping("/category/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable Long id) {
         Optional<Category> optionalCategory = categoryService.findOne(id);
         if (optionalCategory.isPresent())
             categoryService.deleteOne(id);
@@ -59,7 +59,7 @@ public class CategoryController {
         Optional<Category> optionalCategory = categoryService.findOne(id);
         if (optionalCategory.isPresent())
             return ResponseEntity.ok(categoryService.update(optionalCategory.get(), newCategory));
-        else    //pass the location back and use 201
+        else    //TODO pass the location back and use 201
             return ResponseEntity.ok(categoryService.save(newCategory));
     }
 }

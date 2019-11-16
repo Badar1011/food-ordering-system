@@ -1,13 +1,13 @@
 package com.uppercrust.foodorderingsystem.FoodDetail;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.uppercrust.foodorderingsystem.FoodProduct.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -21,4 +21,9 @@ public class Detail {
     private String name;
 
     private double price;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
