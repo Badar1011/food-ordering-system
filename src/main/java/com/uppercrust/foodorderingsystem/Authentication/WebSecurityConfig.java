@@ -27,8 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/category").authenticated()
+                .mvcMatchers(HttpMethod.GET, "/category").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/category").authenticated()
                 .anyRequest().permitAll()
                 .and()
@@ -36,13 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout();
 
-        http.csrf().disable();
+
     }
-//TODO add some fake user, ask rob about password encode bean, test it all.
-//TODO delete user from database, create a new user and test it all
+//TODO password encode bean
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // could remove the password encoder bit to see how it goes.
+        // could remove the password encoder bit to see if default is applied
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }
 }
