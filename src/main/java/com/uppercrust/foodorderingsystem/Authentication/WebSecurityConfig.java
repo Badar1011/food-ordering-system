@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @Bean()
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
@@ -29,8 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/category").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.POST, "/category").authenticated()
+                //.mvcMatchers(HttpMethod.GET, "/category").hasRole("ADMIN")
+                //.mvcMatchers(HttpMethod.POST, "/category").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

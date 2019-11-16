@@ -8,9 +8,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CategoryController {
@@ -23,13 +22,13 @@ public class CategoryController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<List<Category>> getCat() {
+    public ResponseEntity<List<Category>> listCategory() {
         List<Category> categories = categoryService.getCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        return ResponseEntity.ok(categories);
     }
 
     @PostMapping("/category")
-    public ResponseEntity<Category> addCat(@RequestBody @Valid Category category) {
+    public ResponseEntity<Category> addCategory(@RequestBody @Valid Category category) {
         Category newCategory = categoryService.save(category);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newCategory.getId()).toUri();
@@ -37,7 +36,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category/{id}")
-    public ResponseEntity<Category> getCat(@PathVariable Long id) {
+    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
         return categoryService.findOne(id)
                 .map(category -> ResponseEntity.ok().body(category))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -45,25 +44,22 @@ public class CategoryController {
 
 
     @DeleteMapping("/category/{id}")
-    public ResponseEntity<?> deleteCat(@PathVariable Long id) {
-        Boolean isPresent = categoryService.findOne(id).isPresent();
-        if (isPresent) {
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+        Optional<Category> optionalCategory = categoryService.findOne(id);
+        if (optionalCategory.isPresent())
             categoryService.deleteOne(id);
-            return ResponseEntity.noContent().build();
-        } else {
+        else
             return ResponseEntity.notFound().build();
-        }
-
+        return ResponseEntity.noContent().build();
     }
 
 
- /* @PutMapping("/category/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category){
-        Category category2 = categoryService.findOne(id).get();
-        if (category2 == null)
-        {
-            categoryService.save(category);
-        }
-
-    }*/
+    @PutMapping("/category/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody @Valid Category newCategory) {
+        Optional<Category> optionalCategory = categoryService.findOne(id);
+        if (optionalCategory.isPresent())
+            return ResponseEntity.ok(categoryService.update(optionalCategory.get(), newCategory));
+        else    //pass the location back and use 201
+            return ResponseEntity.ok(categoryService.save(newCategory));
+    }
 }
