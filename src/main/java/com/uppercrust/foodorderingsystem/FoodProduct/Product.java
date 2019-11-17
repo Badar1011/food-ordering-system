@@ -22,8 +22,8 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Detail> details;
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    private List<Detail> detail;
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "category_id")

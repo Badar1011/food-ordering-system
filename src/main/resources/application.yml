@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: 'jdbc:mysql://${MYSQL_HOST:helios.csesalford.com}:3306/stc537'
+    username: stc537
+    password: Bluesa9876!
+
+  jpa:
+    hibernate:
+      ddl-auto: update
